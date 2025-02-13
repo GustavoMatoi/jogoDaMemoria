@@ -10,9 +10,22 @@ class BoardManager {
         this.cardManager = cardManager
     }
 
-    clear(){}
+    clear(){
+        this.node.innerHTML = ""
+    }
 
-    fill(numCards){}
+    fill(numCards){
+        if(numCards > 2 *this.numImgs){
+            console.error("Número insuficiente de imagens")
+            numCards = 2 * this.numImgs
+        }
 
-    addCard(card){}
+        this.clear()
+        this.addCard(this.cardManager.gen(1))
+    }
+
+    addCard(card){
+        this.node.appendChild(card)
+    }
+
 }
