@@ -1,24 +1,39 @@
-let menu = document.getElementById('menu')
-let start = document.getElementById('start')
-let select = document.getElementById('numCards')
 
-function urlBuilder(){}
+function urlBuilder(number){
+    number += "";
+    number = number.padStart(2, '0');
 
-let card = new CardManager(urlBuilder)
-let board = new BoardManager("board", 50, card)
-for (let i = 4; i <= 10; i += 2) {
-    let n = i * i
-    let op = document.createElement("option")
-    op.value = n
-    op.innerHTML = n
-    select.appendChild(op)
+    return `images/heros/card${number}.jpeg`;
 }
 
-//const addPeixe = () => {console.log("Peixe adicionado")}
+let card = new CardManager(urlBuilder);
+let board = new BoardManager("board", 50, card);
 
-start.addEventListener('click', ()=> {
-    menu.classList.add('hidden')
-    board.node.classList.remove('hidden')
-    board.fill(select.value)
-})
+let menu = document.getElementById('menu');
+let select = document.getElementById('numCards');
+let start = document.getElementById('start');
 
+for (let i = 4; i <= 10; i += 2) { 
+    let n = i * i;
+    let op = document.createElement('option');
+
+    op.value = n;
+    op.innerHTML = n;
+
+    select.appendChild(op);
+}
+
+start.addEventListener('click', () => {
+    menu.classList.add('hidden');
+    board.node.classList.remove('hidden');
+    board.fill(select.value);
+});
+
+board.node.addEventListener('click', () => {
+    if (board.check()) {
+        setTimeout(() => {
+            menu.classList.remove('hidden');
+            board.node.classList.add('hidden');
+        }, 2000);
+    }
+});
